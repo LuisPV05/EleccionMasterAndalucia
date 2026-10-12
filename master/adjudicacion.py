@@ -21,3 +21,7 @@ class Adjudicacion:
             raise ErrorDominio(
                 "La convocatoria de una adjudicación no puede estar vacía."
             )
+        if not isinstance(self.master, Master):
+            raise ErrorDominio("La adjudicación necesita un máster válido.")
+        if not isinstance(self.corte, Corte):
+            raise ErrorDominio("La adjudicación necesita un corte válido.")
