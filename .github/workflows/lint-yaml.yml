@@ -1,0 +1,37 @@
+name: Yaml Lint
+
+on:
+  push:
+    paths:
+      - "**/*.ya?ml"
+  pull_request:
+    paths:
+      - "**/*.ya?ml"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install yq
+        run: |
+          if ! command -v yq >/dev/null 2>&1; then
+            sudo wget -qO /usr/local/bin/yq \
+              https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+            sudo chmod +x /usr/local/bin/yq
+          fi
+
+      - name: Validate YAML files
+        run: |
+          find . \
+            -type f \
+            \( -name "*.yml" -o -name "*.yaml" \) \
+            -not -path "./.git/*" \
+            -print0 |
+          while IFS= read -r -d '' file; do
+            echo "Validating $file"
+            yq eval '.' "$file" >/dev/null
+          done
