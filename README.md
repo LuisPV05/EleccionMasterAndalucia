@@ -44,3 +44,4 @@ ha obtenido del Portal de la Junta de Andalucía.
 ## Documentación de los objetivos
 - [Objetivo 0: tarjeta del juego de rol y configuración del repositorio](docs/objetivos/objetivo-0/objetivo-0.md)
 - Objetivo 1: [personas](docs/objetivos/objetivo-1/personas.md), [user journeys](docs/objetivos/objetivo-1/user-journeys.md), [historias de usuario](docs/objetivos/objetivo-1/historias-usuario.md) y [milestones](docs/objetivos/objetivo-1/milestones.md)
+- Objetivo 2: [modelado de HU001](docs/objetivos/objetivo-2/modelado-hu001.md)
