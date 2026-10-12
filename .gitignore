@@ -154,4 +154,3 @@ __pycache__/
 # Herramientas de desarrollo
 .pytest_cache/
 .mypy_cache/
-.ruff_cache/
