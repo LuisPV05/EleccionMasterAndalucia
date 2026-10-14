@@ -1,25 +1,22 @@
-"""Criterios utilizados para valorar la solicitud de un máster."""
-
 from dataclasses import dataclass
-from math import isfinite
+from decimal import Decimal
 
 from .errores import ErrorDominio
 
 
 @dataclass(frozen=True)
 class Criterio:
-    """Aspecto de valoración con ponderación opcional si se conoce."""
-
     nombre: str
-    ponderacion: float | None = None
+    ponderacion: Decimal
+    calculable: bool
 
     def __post_init__(self) -> None:
         if not isinstance(self.nombre, str) or not self.nombre.strip():
             raise ErrorDominio("El nombre del criterio no puede estar vacío.")
-        if self.ponderacion is not None and (
-            isinstance(self.ponderacion, bool)
-            or not isinstance(self.ponderacion, (int, float))
-            or not isfinite(self.ponderacion)
-            or not 0 <= self.ponderacion <= 100
-        ):
+        if not isinstance(self.ponderacion, Decimal):
+            raise ErrorDominio("La ponderación debe ser Decimal.")
+        if not Decimal("0") <= self.ponderacion <= Decimal("100"):
             raise ErrorDominio("La ponderación debe estar entre 0 y 100.")
+        if not isinstance(self.calculable, bool):
+            raise ErrorDominio("La calculabilidad debe ser booleana.")
+        object.__setattr__(self, "nombre", self.nombre.strip())
