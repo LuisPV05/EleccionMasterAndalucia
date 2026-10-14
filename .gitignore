@@ -143,14 +143,3 @@ vite.config.ts.timestamp-*
 .vite/
 datos/
 docs/fuentes-datos/
-
-# Python
-__pycache__/
-*.py[cod]
-
-# Entornos virtuales
-.venv/
-
-# Herramientas de desarrollo
-.pytest_cache/
-.mypy_cache/
