@@ -1,6 +1,0 @@
-[project]
-name = "eleccion-master-andalucia"
-version = "0.1.0"
-description = "Modelado del dominio de la HU001 de EleccionMasterAndalucia"
-requires-python = ">=3.14,<3.15"
-dependencies = []
