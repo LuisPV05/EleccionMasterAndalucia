@@ -7,15 +7,14 @@ from .criterio import Criterio
 from .errores import ErrorDominio
 from .requisito import Requisito
 from .titulacion import Titulacion
-
 @dataclass(frozen=True, eq=False)
 class Master:
-    codigo: str
     nombre: str
     convocatoria: str
     accesos: Mapping[Titulacion, Acceso]
     criterios: tuple[Criterio, ...]
     requisitos: tuple[Requisito, ...] = ()
+    codigo: str
 
     def __post_init__(self) -> None:
         if not isinstance(self.convocatoria, str) or not self.convocatoria.strip():
