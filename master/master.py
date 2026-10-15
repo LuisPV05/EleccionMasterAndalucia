@@ -10,9 +10,9 @@ from .titulacion import Titulacion
 
 @dataclass(frozen=True, eq=False)
 class Master:
+    nombre: str
     convocatoria: str
     codigo: str
-    nombre: str
     accesos: Mapping[Titulacion, Acceso]
     criterios: tuple[Criterio, ...]
     requisitos: tuple[Requisito, ...] = ()
