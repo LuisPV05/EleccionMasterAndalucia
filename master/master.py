@@ -19,7 +19,7 @@ class Requisito:
 
 @dataclass(frozen=True)
 class Criterio:
-    nombre: str
+    nombre: NombreMaster
     ponderacion: Decimal
     calculable: bool
 
@@ -48,7 +48,7 @@ class Acceso:
 
 @dataclass(frozen=True)
 class Master:
-    nombre: str
+    nombre: NombreMaster
     accesos: Mapping[str, Acceso]
     criterios: tuple[Criterio, ...]
     requisitos: tuple[Requisito, ...]
