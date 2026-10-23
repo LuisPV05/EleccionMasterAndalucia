@@ -19,13 +19,13 @@ class Requisito:
 
 @dataclass(frozen=True)
 class Criterio:
-    nombre: NombreMaster
+    NombreMaster: str
     ponderacion: Decimal
     calculable: bool
 
     def __post_init__(self) -> None:
-        if not isinstance(self.nombre, str) or not self.nombre.strip():
-            raise ErrorDominio("El nombre del criterio no puede estar vacío.")
+        if not isinstance(self.NombreMaster, str) or not self.NombreMaster.strip():
+            raise ErrorDominio("El NombreMaster del criterio no puede estar vacío.")
         if not isinstance(self.ponderacion, Decimal):
             raise ErrorDominio("La ponderación debe ser Decimal.")
         if not Decimal("0") <= self.ponderacion <= Decimal("100"):
@@ -48,20 +48,20 @@ class Acceso:
 
 @dataclass(frozen=True)
 class Master:
-    nombre: NombreMaster
+    NombreMaster: str
     accesos: Mapping[str, Acceso]
     criterios: tuple[Criterio, ...]
     requisitos: tuple[Requisito, ...]
     corte: CorteNumerico | EstadoCorte
 
     def __post_init__(self) -> None:
-        if not isinstance(self.nombre, str) or not self.nombre.strip():
-            raise ErrorDominio("El nombre del máster no puede estar vacío.")
+        if not isinstance(self.NombreMaster, str) or not self.NombreMaster.strip():
+            raise ErrorDominio("El NombreMaster del máster no puede estar vacío.")
         if not isinstance(self.accesos, Mapping):
-            raise ErrorDominio("Los accesos deben estar indexados por nombre de titulación.")
+            raise ErrorDominio("Los accesos deben estar indexados por NombreMaster de titulación.")
         for titulacion, acceso in self.accesos.items():
             if not isinstance(titulacion, str) or not titulacion.strip():
-                raise ErrorDominio("El nombre de la titulación no puede estar vacío.")
+                raise ErrorDominio("El NombreMaster de la titulación no puede estar vacío.")
             if not isinstance(acceso, Acceso):
                 raise ErrorDominio("Cada titulación debe asociarse a un acceso válido.")
         if not isinstance(self.criterios, tuple) or not all(
