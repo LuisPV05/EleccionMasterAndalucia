@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from decimal import Decimal
 from enum import Enum
 
-from .errores import ErrorDominio
 from .prioridad_carreras import PrioridadCarrera
 
 class EstadoCorte(Enum):
@@ -16,9 +15,9 @@ class CorteNumerico:
 
     def __post_init__(self) -> None:
         if not isinstance(self.prioridad, PrioridadCarrera):
-            raise ErrorDominio("El corte numérico necesita una prioridad de carrera válida.")
+            raise ValueError("El corte numérico necesita una prioridad de carrera válida.")
         if not isinstance(self.puntuacion, Decimal) or self.puntuacion < Decimal("0"):
-            raise ErrorDominio("La puntuación de corte debe ser Decimal no negativa.")
+            raise ValueError("La puntuación de corte debe ser Decimal no negativa.")
 
 
 Corte = CorteNumerico | EstadoCorte
