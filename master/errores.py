@@ -1,2 +1,0 @@
-class ErrorDominio(ValueError):
-    pass
