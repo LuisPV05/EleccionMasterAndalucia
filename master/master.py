@@ -43,33 +43,57 @@ class Acceso:
             raise ValueError("Los requisitos de acceso deben ser una tupla válida.")
 
 
-@dataclass(frozen=True)
 class Master:
-    accesos: Mapping[str, Acceso]
-    criterios: Mapping[str, Criterio]
-    requisitos: tuple[Requisito, ...]
-    corte: CorteNumerico | EstadoCorte
-
-    def __post_init__(self) -> None:
-        if not isinstance(self.accesos, Mapping):
+    def __init__(
+        self,
+        accesos: Mapping[str, Acceso],
+        criterios: Mapping[str, Criterio],
+        requisitos: tuple[Requisito, ...],
+        corte: CorteNumerico | EstadoCorte,
+    ) -> None:
+        if not isinstance(accesos, Mapping):
             raise ValueError("Los accesos deben estar indexados por nombre de titulación.")
-        for titulacion, acceso in self.accesos.items():
+        for titulacion, acceso in accesos.items():
             if not isinstance(titulacion, str) or not titulacion.strip():
                 raise ValueError("El nombre de la titulación no puede estar vacío.")
             if not isinstance(acceso, Acceso):
                 raise ValueError("Cada titulación debe asociarse a un acceso válido.")
-        if not isinstance(self.criterios, Mapping):
+        if not isinstance(criterios, Mapping):
             raise ValueError("Los criterios deben estar indexados por nombre de criterio.")
-        for nombre, criterio in self.criterios.items():
+        for nombre, criterio in criterios.items():
             if not isinstance(nombre, str) or not nombre.strip():
                 raise ValueError("El nombre del criterio no puede estar vacío.")
             if not isinstance(criterio, Criterio):
                 raise ValueError("Cada nombre de criterio debe asociarse a un criterio válido.")
-        if self.criterios and sum((c.ponderacion for c in self.criterios.values()), Decimal("0")) != Decimal("100"):
+        if criterios and sum((c.ponderacion for c in criterios.values()), Decimal("0")) != Decimal("100"):
             raise ValueError("Las ponderaciones de los criterios deben sumar 100.")
-        if not isinstance(self.requisitos, tuple) or not all(
-            isinstance(requisito, Requisito) for requisito in self.requisitos
+        if not isinstance(requisitos, tuple) or not all(
+            isinstance(requisito, Requisito) for requisito in requisitos
         ):
             raise ValueError("Los requisitos generales deben ser una tupla válida.")
-        if not isinstance(self.corte, (CorteNumerico, EstadoCorte)):
+        self._accesos = accesos
+        self._criterios = criterios
+        self._requisitos = requisitos
+        self.corte = corte
+
+    @property
+    def accesos(self) -> Mapping[str, Acceso]:
+        return self._accesos
+
+    @property
+    def criterios(self) -> Mapping[str, Criterio]:
+        return self._criterios
+
+    @property
+    def requisitos(self) -> tuple[Requisito, ...]:
+        return self._requisitos
+
+    @property
+    def corte(self) -> CorteNumerico | EstadoCorte:
+        return self._corte
+
+    @corte.setter
+    def corte(self, corte: CorteNumerico | EstadoCorte) -> None:
+        if not isinstance(corte, (CorteNumerico, EstadoCorte)):
             raise ValueError("El máster necesita un corte válido.")
+        self._corte = corte
