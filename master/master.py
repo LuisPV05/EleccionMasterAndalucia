@@ -2,7 +2,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from decimal import Decimal
 
-from .corte import Corte
+from .corte import CorteNumerico, EstadoCorte
 from .prioridad_carreras import PrioridadCarrera
 
 @dataclass(frozen=True)
@@ -71,5 +71,5 @@ class Master:
             isinstance(requisito, Requisito) for requisito in self.requisitos
         ):
             raise ValueError("Los requisitos generales deben ser una tupla válida.")
-        if not isinstance(self.corte, Corte):
+        if not isinstance(self.corte, (CorteNumerico, EstadoCorte)):
             raise ValueError("El máster necesita un corte válido.")
