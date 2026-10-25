@@ -15,11 +15,3 @@ class Convocatoria:
                 raise ValueError("La convocatoria solo puede contener másteres válidos.")
         self._identificador = identificador
         self._masters = masters
-
-    @property
-    def identificador(self) -> str:
-        return self._identificador
-
-    @property
-    def masters(self) -> Mapping[str, Master]:
-        return self._masters
