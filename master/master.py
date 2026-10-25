@@ -42,7 +42,6 @@ class Acceso:
         ):
             raise ValueError("Los requisitos de acceso deben ser una tupla válida.")
 
-
 class Master:
     def __init__(
         self,
@@ -74,26 +73,9 @@ class Master:
         self._accesos = accesos
         self._criterios = criterios
         self._requisitos = requisitos
-        self.corte = corte
+        self.actualizar_corte(corte)
 
-    @property
-    def accesos(self) -> Mapping[str, Acceso]:
-        return self._accesos
-
-    @property
-    def criterios(self) -> Mapping[str, Criterio]:
-        return self._criterios
-
-    @property
-    def requisitos(self) -> tuple[Requisito, ...]:
-        return self._requisitos
-
-    @property
-    def corte(self) -> CorteNumerico | EstadoCorte:
-        return self._corte
-
-    @corte.setter
-    def corte(self, corte: CorteNumerico | EstadoCorte) -> None:
+    def actualizar_corte(self, corte: CorteNumerico | EstadoCorte) -> None:
         if not isinstance(corte, (CorteNumerico, EstadoCorte)):
             raise ValueError("El máster necesita un corte válido.")
         self._corte = corte
