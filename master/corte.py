@@ -18,6 +18,3 @@ class CorteNumerico:
             raise ValueError("El corte numérico necesita una prioridad de carrera válida.")
         if not isinstance(self.puntuacion, Decimal) or self.puntuacion < Decimal("0"):
             raise ValueError("La puntuación de corte debe ser Decimal no negativa.")
-
-
-Corte = CorteNumerico | EstadoCorte
